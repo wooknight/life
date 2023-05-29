@@ -1,0 +1,61 @@
+openapi: 3.0.0
+info:
+  title: nuggets API
+  description: These will store the basic nuggets of whatever I find useful from my diary
+  version: 0.1.9
+servers:
+  - url: http://api.nuggets.ramesh.wiki/v1
+    description:  Main (production) server
+  - url: http://staging-api.nuggets.ramesh.wiki/v1
+    description: Internal staging server for testing
+paths:
+  /diary:
+    get:
+      summary: Returns a list of all diary entries with pagination
+      description: will return all the diary entries sorted in ascending order by the priority.
+      responses:
+        '200':    # status code
+          description: A JSON array of all nuggets of daily wisdom
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+    post:
+      summary: create a new diary entry
+      description: create a brand new entry
+      responses:
+        '201':    # status code
+          description: A JSON array of all nuggets of daily wisdom
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+    put:
+      summary: Returns a list of all diary entries with pagination
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '204':    # status code
+          description: A JSON array of all nuggets of daily wisdom
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+    delete:
+      summary: Returns a list of all diary entries with pagination
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '204':    # status code
+          description: A JSON array of all nuggets of daily wisdom
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+
