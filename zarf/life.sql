@@ -1,48 +1,49 @@
 CREATE USER wooknight;
 
 GRANT ALL PRIVILEGES ON DATABASE life TO wooknight;
-CREATE TABLE life_user (
+CREATE TABLE users (
     id serial primary key,
-    username varchar(255) unique not null ,
+    user_name varchar(255) unique not null ,
     password VARCHAR ( 50 ) NOT NULL,
     email varchar(255) unique not null ,
-    created_on TIMESTAMP not null ,
-    updated_on TIMESTAMP not null 
+    created_at TIMESTAMP not null ,
+    updated_at TIMESTAMP not null 
 );
 
-CREATE TABLE goal (
+CREATE TABLE goals (
     id serial primary key,
-    goal varchar(255) unique not null ,
-    created_on TIMESTAMP not null ,
-    updated_on TIMESTAMP not null 
+    goal_name varchar(255) unique not null ,
+    created_at TIMESTAMP not null ,
+    updated_at TIMESTAMP not null 
 );
 
-CREATE TABLE thought (
+CREATE TABLE thoughts (
     id serial primary key,
-    thought text not null ,
-    created_on TIMESTAMP not null ,
-    updated_on TIMESTAMP not null 
+    thought_name text not null ,
+    created_at TIMESTAMP not null ,
+    updated_at TIMESTAMP not null 
 );
 
-CREATE TABLE habit (
+CREATE TABLE habits (
     id serial primary key,
-    habit varchar(255) unique not null ,
-    created_on TIMESTAMP not null ,
-    updated_on TIMESTAMP not null 
+    habit_name varchar(255) unique not null ,
+    habit_desc text not null ,
+    created_at TIMESTAMP not null ,
+    updated_at TIMESTAMP not null 
 );
 
-CREATE TABLE tag (
+CREATE TABLE tags (
     id serial primary key,
-    tagName varchar(255) unique not null ,
-    created_on TIMESTAMP not null ,
-    updated_on TIMESTAMP not null 
+    tag_name varchar(255) unique not null ,
+    created_at TIMESTAMP not null ,
+    updated_at TIMESTAMP not null 
 );
 
 
-CREATE TABLE model (
+CREATE TABLE models (
     id serial primary key,
-    modelName varchar(255) unique not null ,
+    model_name varchar(255) unique not null ,
     steps text[] ,
-    created_on TIMESTAMP not null ,
-    updated_on TIMESTAMP not null 
+    created_at TIMESTAMP not null ,
+    updated_at TIMESTAMP not null 
 );
