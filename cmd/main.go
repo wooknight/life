@@ -23,6 +23,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("unable to connect to database")
 	}
+	defer db.Close()
 }
 
 func setupDB(url string) (*sql.DB, error) {
