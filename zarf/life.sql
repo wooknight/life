@@ -1,6 +1,3 @@
-CREATE USER wooknight;
-
-GRANT ALL PRIVILEGES ON DATABASE life TO wooknight;
 CREATE TABLE users (
     id serial primary key,
     user_name varchar(255) unique not null ,
@@ -20,6 +17,8 @@ CREATE TABLE goals (
 CREATE TABLE thoughts (
     id serial primary key,
     thought_name text not null ,
+    thought_description text not null ,
+    thought_tags text ARRAY,
     created_at TIMESTAMP not null ,
     updated_at TIMESTAMP not null 
 );
