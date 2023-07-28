@@ -9,18 +9,20 @@ import (
 // https://stackoverflow.com/questions/55899890/convert-a-postgres-row-into-golang-struct-with-array-field
 type Thought struct {
 	ID                 int64          `json:"id"`
-	Thought            string         `json:"thought"`
-	ThoughtDescription string         `json:"description" pg:"description"`
-	ThoughtTags        pq.StringArray `db:"tags" json:"tags"`
+	Thought            string         `json:"thought" pg:"thought"`
+	ThoughtDescription string         `json:"description" pg:"descr"`
+	ThoughtTags        pq.StringArray `pq:"tags" json:"tags"`
 	CreatedAt          time.Time
 	UpdatedAt          time.Time
 }
 
-func NewThought(thought string) (*Thought, error) {
+func NewThought(thought string, desc string, tags []string) (*Thought, error) {
 	tht := &Thought{
-		Thought:   thought,
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Time{},
+		Thought:            thought,
+		ThoughtDescription: desc,
+		ThoughtTags:        tags,
+		CreatedAt:          time.Now(),
+		UpdatedAt:          time.Time{},
 	}
 	if err := tht.Validate(); err != nil {
 		return nil, err
@@ -29,7 +31,7 @@ func NewThought(thought string) (*Thought, error) {
 }
 
 func (t *Thought) Validate() error {
-	if t.Thought == "" {
+	if t.Thought == "" || t.ThoughtDescription == "" || len(t.ThoughtTags) == 0 {
 		return ErrInvalidThought
 	}
 	return nil

@@ -6,10 +6,16 @@ import (
 	"github.com/spf13/viper"
 )
 
+// DBUrl    string `mapstructure:"DB_URL"`
+// DBDriver string `mapstructure:"DB_DRIVER"`
+
 type AppConfig struct {
+	HTTPPort string `mapstructure:"HTTP_PORT"`
+	Host     string `mapstructure:"HOST"`
 	Port     string `mapstructure:"PORT"`
-	DBUrl    string `mapstructure:"DB_URL"`
-	DBDriver string `mapstructure:"DB_DRIVER"`
+	User     string `mapstructure:"USER"`
+	Password string `mapstructure:"PASSWORD"`
+	DB       string `mapstructure:"DBNAME"`
 }
 
 func LoadAppConfig(path string) (AppConfig, error) {

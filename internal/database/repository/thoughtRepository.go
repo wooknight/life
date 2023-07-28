@@ -29,7 +29,7 @@ func (r *thoughtRepository) Get(ctx context.Context, id int64) (*entity.Thought,
 	var updatedAt sql.NullTime
 	t := &entity.Thought{}
 	row := stmt.QueryRowContext(ctx, id)
-	err = row.Scan(&t.ID, &t.Thought, &t.CreatedAt, &updatedAt)
+	err = row.Scan(&t.ID, &t.Thought, &t.ThoughtDescription, &t.ThoughtTags, &t.CreatedAt, &updatedAt)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return nil, ErrThoughtNotFound
@@ -74,12 +74,12 @@ func (r *thoughtRepository) List(ctx context.Context) ([]*entity.Thought, error)
 }
 
 func (r *thoughtRepository) Create(ctx context.Context, idea *entity.Thought) (int64, error) {
-	stmt, err := r.db.PrepareContext(ctx, "insert into thoughts (thought) values ($1) returning id")
+	stmt, err := r.db.PrepareContext(ctx, "insert into thoughts (thought, descr, tags) values ($1, $2, $3) returning id")
 	if err != nil {
 		return 0, fmt.Errorf("%s:%w", ErrPrepareStatement, err)
 	}
 	defer stmt.Close()
-	err = r.db.QueryRowContext(ctx, idea.Thought).Scan(&idea.ID)
+	err = stmt.QueryRowContext(ctx, idea.Thought, idea.ThoughtDescription, idea.ThoughtTags).Scan(&idea.ID)
 	if err != nil {
 		return 0, fmt.Errorf("%s:%w", ErrExecuteQuery, err)
 	}
@@ -100,7 +100,7 @@ func (r *thoughtRepository) Search(ctx context.Context, searchStr string) ([]*en
 	for rows.Next() {
 		var t entity.Thought
 		var updatedAt sql.NullTime
-		err = rows.Scan(&t.ID, &t.Thought, &t.CreatedAt, &updatedAt)
+		err = rows.Scan(&t.ID, &t.Thought, &t.ThoughtDescription, &t.ThoughtTags, &t.CreatedAt, &updatedAt)
 		if err != nil {
 			return nil, fmt.Errorf("%s:%w", ErrScanData, err)
 		}
@@ -117,7 +117,7 @@ func (r *thoughtRepository) Search(ctx context.Context, searchStr string) ([]*en
 }
 
 func (r *thoughtRepository) Update(ctx context.Context, t *entity.Thought) error {
-	stmt, err := r.db.PrepareContext(ctx, "update thoughts set thought = $1, updated_at = NOW() where id = $2")
+	stmt, err := r.db.PrepareContext(ctx, "update thoughts set thought = $1,descr = $2 , tags = $3, updated_at = NOW() where id = $4")
 	if err != nil {
 		return fmt.Errorf("%s:%w", ErrPrepareStatement, err)
 	}
