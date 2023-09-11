@@ -9,7 +9,14 @@ CREATE TABLE users (
 
 CREATE TABLE goals (
     id serial primary key,
+    start_date date not null ,
     goal varchar(255) unique not null ,
+    knowledge text ARRAY,
+    comprehension text ARRAY,
+    application text ARRAY,
+    analysis text ARRAY,
+    synthesis text ARRAY,
+    evaluation text ARRAY,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP ,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP 
 );
@@ -46,3 +53,4 @@ CREATE TABLE models (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP ,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP 
 );
+
